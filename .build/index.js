@@ -54,7 +54,6 @@ var UserCrud = /** @class */ (function () {
         this.dynamoDbTable = dynamoDbTable;
     }
     UserCrud.prototype.prepareData = function (data) {
-        console.log(data);
         return {
             TableName: this.dynamoDbTable,
             Item: __assign(__assign({}, data), { id: uuid.v4(), createdAt: new Date().toISOString() }),
@@ -62,7 +61,7 @@ var UserCrud = /** @class */ (function () {
     };
     UserCrud.prototype.create = function (event) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, dbParams, createdUser, error_1;
+            var data, dbParams, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -71,10 +70,10 @@ var UserCrud = /** @class */ (function () {
                         dbParams = this.prepareData(data);
                         return [4 /*yield*/, this.dynamodDbService.put(dbParams).promise()];
                     case 1:
-                        createdUser = _a.sent();
+                        _a.sent();
                         return [2 /*return*/, {
                                 statusCode: 200,
-                                body: JSON.stringify(createdUser),
+                                body: JSON.stringify(dbParams.Item),
                             }];
                     case 2:
                         error_1 = _a.sent();

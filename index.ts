@@ -10,7 +10,6 @@ class UserCrud {
   ) {}
 
   private prepareData(data: CreateUserParams) {
-    console.log(data);
     return {
       TableName: this.dynamoDbTable,
       Item: {
@@ -26,11 +25,11 @@ class UserCrud {
       const data: CreateUserParams = JSON.parse(event.body!);
       const dbParams = this.prepareData(data);
 
-      const createdUser = await this.dynamodDbService.put(dbParams).promise();
+      await this.dynamodDbService.put(dbParams).promise();
 
       return {
         statusCode: 200,
-        body: JSON.stringify(createdUser),
+        body: JSON.stringify(dbParams.Item),
       };
     } catch (error) {
       console.error(error.stack);
