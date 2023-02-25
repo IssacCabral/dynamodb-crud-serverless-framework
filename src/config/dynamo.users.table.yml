@@ -1,21 +1,18 @@
 Table:
   Type: AWS::DynamoDB::Table
   Properties:
-    TableName: ${self:provider.environment.DYNAMODB_TABLE}
+    TableName: ${self:custom.tableName}
     AttributeDefinitions:
       - AttributeName: id
         AttributeType: S
-      - attributeName: name
-        AttributeType: S
-      - attributeName: email
+      - AttributeName: nameUser
         AttributeType: S
     KeySchema:
       - AttributeName: id
         KeyType: HASH
-      - AttributeName: name
+      - AttributeName: nameUser
         KeyType: RANGE
-      - AttributeName: email
-        KeyType: RANGE
+
     ProvisionedThroughput:
       ReadCapacityUnits: ${self:custom.dbReadCapacityUnits}
       WriteCapacityUnits: ${self:custom.dbWriteCapacityUnits}

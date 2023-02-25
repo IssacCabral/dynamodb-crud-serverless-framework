@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,14 +47,47 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.create = void 0;
-var create = function (event) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        console.log("evento", event);
-        return [2 /*return*/, {
-                statusCode: 200,
-            }];
-    });
-}); };
-exports.create = create;
+var uuid = require("uuid");
+var UserCrud = /** @class */ (function () {
+    function UserCrud(dynamodDbService, dynamoDbTable) {
+        this.dynamodDbService = dynamodDbService;
+        this.dynamoDbTable = dynamoDbTable;
+    }
+    UserCrud.prototype.prepareData = function (data) {
+        console.log(data);
+        return {
+            TableName: this.dynamoDbTable,
+            Item: __assign(__assign({}, data), { id: uuid.v4(), createdAt: new Date().toISOString() }),
+        };
+    };
+    UserCrud.prototype.create = function (event) {
+        return __awaiter(this, void 0, void 0, function () {
+            var data, dbParams, createdUser, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        data = JSON.parse(event.body);
+                        dbParams = this.prepareData(data);
+                        return [4 /*yield*/, this.dynamodDbService.put(dbParams).promise()];
+                    case 1:
+                        createdUser = _a.sent();
+                        return [2 /*return*/, {
+                                statusCode: 200,
+                                body: JSON.stringify(createdUser),
+                            }];
+                    case 2:
+                        error_1 = _a.sent();
+                        console.error(error_1.stack);
+                        return [2 /*return*/, {
+                                statusCode: 500,
+                            }];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return UserCrud;
+}());
+exports.default = UserCrud;
 //# sourceMappingURL=index.js.map

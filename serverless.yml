@@ -20,29 +20,29 @@ resources:
 
 functions:
   create-user:
-    handler: index.create
+    handler: src/factory.create
     events:
       - httpApi:
           path: /users
           method: post
-  update-user:
-    handler: index.update
-    events:
-      - httpApi:
-          path: /users
-          method: patch
-  delete-user:
-    handler: index.delete
-    events:
-      - httpApi:
-          path: /users
-          method: delete
-  find-user:
-    handler: index.find
-    events:
-      - httpApi:
-          path: /users
-          method: get
+  # update-user:
+  #   handler: index.update
+  #   events:
+  #     - httpApi:
+  #         path: /users
+  #         method: patch
+  # delete-user:
+  #   handler: index.delete
+  #   events:
+  #     - httpApi:
+  #         path: /users
+  #         method: delete
+  # find-user:
+  #   handler: index.find
+  #   events:
+  #     - httpApi:
+  #         path: /users
+  #         method: get
 
 plugins:
   - serverless-plugin-typescript
