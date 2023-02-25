@@ -5,25 +5,24 @@ provider:
   name: aws
   runtime: nodejs18.x
   region: us-east-1
-  environment:
-    DYNAMODB_TABLE: Users
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - dynamodb:GetItem
-            - dynamodb:UpdateItem
-            - dynamodb:PutItem
-            - dynamodb:DeleteItem
-          Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+  environment: ${file(./config/env.json)}
+  iamRoleStatements: $file(./config/db.iam.role.yml)
+
+custom:
+  tableName: ${self:provider.environment.DbTableName}
+  dbWriteCapacityUnits: ${self:provider.environment.DbWriteCapacityUnits}
+  dbReadCapacityUnits: ${self:provider.environment.DbReadCapacityUnits}
+
+resources:
+  Resources: ${file(./config/dynamo.users.table.yml)}
+
 functions:
   dynamodb-crud:
-    handler: index.handler
+    handler: index.create
     events:
       - httpApi:
-          path: /
-          method: get
+          path: /users
+          method: post
 
 plugins:
   - serverless-plugin-typescript

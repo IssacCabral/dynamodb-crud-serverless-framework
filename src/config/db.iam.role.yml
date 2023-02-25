@@ -1,0 +1,7 @@
+- Effect: Allow
+  Action:
+    - dynamodb:GetItem
+    - dynamodb:UpdateItem
+    - dynamodb:PutItem
+    - dynamodb:DeleteItem
+  Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
