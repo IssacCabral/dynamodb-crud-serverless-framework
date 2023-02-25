@@ -1,0 +1,17 @@
+{
+  "name": "dynamodb-crud",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/aws-lambda": "^8.10.111",
+    "@types/aws-sdk": "^2.7.0",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1323.0",
+    "serverless-plugin-typescript": "^2.1.4",
+    "typescript": "^4.9.5"
+  },
+  "devDependencies": {
+    "serverless-offline": "^12.0.4"
+  }
+}
