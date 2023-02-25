@@ -5,24 +5,44 @@ provider:
   name: aws
   runtime: nodejs18.x
   region: us-east-1
-  environment: ${file(./config/env.json)}
-  iamRoleStatements: $file(./config/db.iam.role.yml)
+  environment: ${file(./src/config/env.json)}
+  iam:
+    role:
+      statements: ${file(./src/config/db.iam.role.yml)}
 
 custom:
-  tableName: ${self:provider.environment.DbTableName}
+  tableName: ${self:provider.environment.DYNAMODB_TABLE}
   dbWriteCapacityUnits: ${self:provider.environment.DbWriteCapacityUnits}
   dbReadCapacityUnits: ${self:provider.environment.DbReadCapacityUnits}
 
 resources:
-  Resources: ${file(./config/dynamo.users.table.yml)}
+  Resources: ${file(./src/config/dynamo.users.table.yml)}
 
 functions:
-  dynamodb-crud:
+  create-user:
     handler: index.create
     events:
       - httpApi:
           path: /users
           method: post
+  update-user:
+    handler: index.update
+    events:
+      - httpApi:
+          path: /users
+          method: patch
+  delete-user:
+    handler: index.delete
+    events:
+      - httpApi:
+          path: /users
+          method: delete
+  find-user:
+    handler: index.find
+    events:
+      - httpApi:
+          path: /users
+          method: get
 
 plugins:
   - serverless-plugin-typescript

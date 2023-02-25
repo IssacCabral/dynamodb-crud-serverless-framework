@@ -1,6 +1,6 @@
 import { APIGatewayEvent } from "aws-lambda";
 
-const handler = async (event: APIGatewayEvent) => {
+const create = async (event: APIGatewayEvent) => {
   console.log("evento", event);
 
   return {
@@ -8,4 +8,4 @@ const handler = async (event: APIGatewayEvent) => {
   };
 };
 
-export { handler };
+export { create };

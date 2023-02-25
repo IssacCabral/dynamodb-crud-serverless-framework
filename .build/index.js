@@ -36,8 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handler = void 0;
-var handler = function (event) { return __awaiter(void 0, void 0, void 0, function () {
+exports.create = void 0;
+var create = function (event) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         console.log("evento", event);
         return [2 /*return*/, {
@@ -45,5 +45,5 @@ var handler = function (event) { return __awaiter(void 0, void 0, void 0, functi
             }];
     });
 }); };
-exports.handler = handler;
+exports.create = create;
 //# sourceMappingURL=index.js.map
