@@ -31,18 +31,18 @@ functions:
   #     - httpApi:
   #         path: /users
   #         method: patch
-  # delete-user:
-  #   handler: index.delete
-  #   events:
-  #     - httpApi:
-  #         path: /users
-  #         method: delete
-  # find-user:
-  #   handler: index.find
-  #   events:
-  #     - httpApi:
-  #         path: /users
-  #         method: get
+  delete-user:
+    handler: src/factory.deleteUser
+    events:
+      - httpApi:
+          path: /users/{id}
+          method: delete
+  find-users:
+    handler: src/factory.findAllUsers
+    events:
+      - httpApi:
+          path: /users
+          method: get
 
 plugins:
   - serverless-plugin-typescript
